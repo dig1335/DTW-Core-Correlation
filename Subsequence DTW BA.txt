@@ -1,3 +1,5 @@
+## Invaluable sources include the DTW documentation and vignette by Toni Giorgino and succesful application of DTW for core correlation by Trauth et al. (2018; https://bit.ly/2lmBytU). ##
+
 setwd("E:/R (BA)")
 library("dtw")
 Ti9B <- read.csv("9BTest.csv")
