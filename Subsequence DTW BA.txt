@@ -36,6 +36,13 @@ str(alignmentOBE)
 
 ## $ jmin = last index value of reference curve matched to query
 
+## Tests with simple dummy data (comparing constant slope query with      
+## slope-plateau-slope  reference) suggests horizontal lines indicate 
+## no matching found within that section?
+
+___________________________________________________________________________________________________
+
+
 ## Basic concept only! ## Full 10 plot - working on linking then to floating below (section 11)
 
 alignment2 <- dtw(Full10Ti$TiD, Ti9B$TiD, keep=TRUE,step=asymmetric, open.end=TRUE,open.begin=TRUE)
