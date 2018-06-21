@@ -32,6 +32,10 @@ dtwPlotThreeWay(alignmentOBE,
                 margin = 3.75, inner.margin = 0.44, 
                 main = "Ti cps: 9B vs. 10A")
 
+str(alignmentOBE)
+
+## $ jmin = last index value of reference curve matched to query
+
 ## Basic concept only! ## Full 10 plot - working on linking then to floating below (section 11)
 
 alignment2 <- dtw(Full10Ti$TiD, Ti9B$TiD, keep=TRUE,step=asymmetric, open.end=TRUE,open.begin=TRUE)
