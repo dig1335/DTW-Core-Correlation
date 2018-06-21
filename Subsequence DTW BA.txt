@@ -15,7 +15,7 @@ hq <- (0:200)/15
 hq <- round(hq*1000)      #  indices in query for  pi/4 .. 7/4 pi
 hw <- (alignmentOBE$index1 %in% hq)   # where are they on the w. curve?
 hi <- (1:length(alignmentOBE$index1))[hw];   # get the indices of TRUE elems
-dtwPlotThreeWay(alignmentOBE,match.indices=hi);
+dtwPlotThreeWay(alignmentOBE,match.indices=hi, ylab="9B\n", xlab="\n10A", margin = 3.75, inner.margin = 0.44, main = "Ti cps: 9B vs. 10A");
 
 ##Full 10 plot - working on linking then to floating below (section 11)
 
@@ -27,4 +27,4 @@ hq <- (0:200)/5
 hq <- round(hq*1000)      #  indices in query for  pi/4 .. 7/4 pi
 hw <- (alignment2$index1 %in% hq)   # where are they on the w. curve?
 hi <- (1:length(alignment2$index1))[hw];   # get the indices of TRUE elems
-dtwPlotThreeWay(alignment2,match.indices=hi);
+dtwPlotThreeWay(alignment2,match.indices=hi)
