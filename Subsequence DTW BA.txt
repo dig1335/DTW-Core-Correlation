@@ -6,6 +6,12 @@ Ti9B <- read.csv("9BTest.csv")
 Ti10A <- read.csv("10AonlyTest.csv")
 Full10Ti <- read.csv("Full10Test.csv")
 
+#*# indices call code for thrreway plots below #*#
+hq <- (0:200)/15
+hq <- round(hq*1000)      #  indices in query for  pi/4 .. 7/4 pi
+hw <- (alignmentOBE$index1 %in% hq)   # where are they on the w. curve?
+hi <- (1:length(alignmentOBE$index1))[hw];   # get the indices of TRUE elems
+
 ## TiD represents Ti normalised but multiplied by 10000 to easier visualise
 ## open.end and open.begin = TRUE enables 'subsequence matching' which discovers 
 ## the contiguous part of the template which best matches the whole query. 
@@ -24,23 +30,70 @@ plot(alignmentOBE,type="two",off=3500);
 
 ## Triple plot to see both plots easier with the links between 
 
-hq <- (0:200)/15
-hq <- round(hq*1000)      #  indices in query for  pi/4 .. 7/4 pi
-hw <- (alignmentOBE$index1 %in% hq)   # where are they on the w. curve?
-hi <- (1:length(alignmentOBE$index1))[hw];   # get the indices of TRUE elems
+dtwPlotThreeWay(alignmentOBE,
+                match.indices=hi, 
+                ylab="9B (base of composite)\n", xlab="\n10A (missing section #1)", 
+                margin = 3.75, inner.margin = 0.44, 
+                main = "Ti cps: 9B vs. 10A")
+                
+str(alignmentOBE)
+
+## $ jmin = last index value of reference curve matched to query
+
+
+## Can only include data from certain parts of the time series
+## to test if only a part connects right on the end for example
+## we suspected the shape at start of 10A and 4000 indices to end would overlap
+
+alignmentOBE <- dtw(Ti10A$TiD[0:550], Ti9B$TiD, 
+                    keep=TRUE,step=asymmetric, 
+                    open.end=TRUE,
+                    open.begin=TRUE)
 dtwPlotThreeWay(alignmentOBE,
                 match.indices=hi, 
                 ylab="9B (base of composite)\n", xlab="\n10A (missing section #1)", 
                 margin = 3.75, inner.margin = 0.44, 
                 main = "Ti cps: 9B vs. 10A")
 
-str(alignmentOBE)
+## Or even limit the reference to test a small sample? ##
 
-## $ jmin = last index value of reference curve matched to query
+alignmentOBE <- dtw(Ti10A$TiD[0:550], Ti9B$TiD[3500:4889], 
+                    keep=TRUE,step=asymmetric, 
+                    open.end=TRUE,
+                    open.begin=TRUE)
+dtwPlotThreeWay(alignmentOBE,
+                match.indices=hi, 
+                ylab="9B (base of composite)\n", xlab="\n10A (missing section #1)", 
+                margin = 3.75, inner.margin = 0.44, 
+                main = "Ti cps: 9B vs. 10A")                    
+                    
 
-## Tests with simple dummy data (comparing constant slope query with      
-## slope-plateau-slope  reference) suggests horizontal lines indicate 
-## no matching found within that section?
+
+## 10B-11A other side of the gap 
+
+alignmentOBE <- dtw(Ti11A$TiD, Ti10B$TiD, 
+                    keep=TRUE,step=asymmetric, 
+                    open.end=TRUE,
+                    open.begin=TRUE)
+
+dtwPlotThreeWay(alignmentOBE,
+                match.indices=hi, 
+                ylab="11A (top of floating)\n", xlab="\n10B (missing section #2)", 
+                margin = 3.75, inner.margin = 0.44, 
+                main = "Ti cps: 11A vs. 10B")
+
+## Test overlap between 9+11 - Is there a gap??
+
+alignmentOBE <- dtw(Ti9B$TiD, Ti11A$TiD, 
+                    keep=TRUE,step=asymmetric, 
+                    open.end=TRUE,
+                    open.begin=TRUE)
+
+dtwPlotThreeWay(alignmentOBE,
+                match.indices=hi, 
+                ylab="11A (top of floating)\n", xlab="\n9A (base of composite)", 
+                margin = 3.75, inner.margin = 0.44, 
+                main = "Ti cps: 9B vs. 11A")
 
 ___________________________________________________________________________________________________
 
@@ -51,8 +104,4 @@ alignment2 <- dtw(Full10Ti$TiD, Ti9B$TiD, keep=TRUE,step=asymmetric, open.end=TR
 plot(alignment2,type="two",off=4000);
 
 
-hq <- (0:200)/10
-hq <- round(hq*1000)      #  indices in query for  pi/4 .. 7/4 pi
-hw <- (alignment2$index1 %in% hq)   # where are they on the w. curve?
-hi <- (1:length(alignment2$index1))[hw];   # get the indices of TRUE elems
 dtwPlotThreeWay(alignment2,match.indices=hi)
